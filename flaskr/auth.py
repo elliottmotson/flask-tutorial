@@ -4,10 +4,9 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
 )
 from werkzeug.security import check_password_hash, generate_password_hash
-
 from flaskr.db import get_db
 
-bp = Blueprint('auth', __name__, url_prefix='/auth')
+bp = Blueprint("auth", __name__, url_prefix="/auth")
 
 @bp.route('/register', methods=('GET', 'POST')) # bp.route https://flask.palletsprojects.com/en/2.0.x/api/#flask.Blueprint.route
 def register():
@@ -57,7 +56,7 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user['id']
-            return render_template('blog/index.html') """ TUTORIAL SAYS USE url_for - This doesn't work(?) - Using render_template for now..."""#If no errors with login then... return to index page https://flask.palletsprojects.com/en/2.0.x/api/#flask.url_for
+            return redirect(url_for("index")) # TUTORIAL SAYS USE url_for - This doesn't work(?) - Using render_template for now... -- if no errors with login then... return to index page https://flask.palletsprojects.com/en/2.0.x/api/#flask.url_for
         flash(error) # Flashes error to user based on incorrect user/pwd
     return render_template('auth/login.html')
 
